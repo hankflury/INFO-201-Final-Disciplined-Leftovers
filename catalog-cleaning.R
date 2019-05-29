@@ -1,13 +1,12 @@
 library(ggplot2)
 library(dplyr)
 
-new <- read.csv("input/pnsn_event_export_20190502.csv", header=T)
+new <- read.csv("pnsn_event_export_20190502.csv", header=T)
 
 # Remove the last 3 characters of the Time.Local for the new eqks - these are either PDT/PST
 new$Time.Local <- as.character(new$Time.Local)
 numchar <- unique(nchar(new$Time.Local))
 last.three.chars <- substr(new$Time.Local, numchar-3, numchar)
-stopifnot(last.three.chars%in% c(" PST", " PDT"))
 new$Time.Local <- substr(new$Time.Local, 1, numchar-4)
 
 # Now change to Date string
@@ -25,8 +24,6 @@ names(cat.new) <- c("id", "date", "time", "lat", "lon", "depth", "mag", "distanc
 
 cat.new.sorted <- cat.new[order(cat.new$time, decreasing=F),]
 
-nrow(cat.new.sorted)
 cat.net.sorted <- cat.new.sorted[cat.new.sorted$date >= "1970-01-01", ]
-nrow(cat.net.sorted)
 
-write.csv(cat.new.sorted, "output/pnw-cat-recent-processed.csv", row.names=F)
+write.csv(cat.new.sorted, "pnw-cat-recent-processed.csv", row.names=F)
