@@ -10,20 +10,11 @@ mag.plot <- function(data) {
   plot
 }
 
-mag.plot(cat)
-cat$date <- as.Date(cat$date)
-
-cat.subset <- cat[cat$lon < -124 & cat$lat < 43, ]
-mag.plot(cat.subset)
-
-
 mag.plot.leaf <- function(data) {
   leaflet() %>% 
     addTiles() %>% 
     addCircleMarkers(lng = data$lon, lat = data$lat, radius = (data$mag - 2.5) * 10, color = "purple", fill = "white")
 }
-mag.plot.leaf(cat)
-mag.plot.leaf(cat.subset)
 
 time.series <- function(data) {
   plot <- ggplot(data) +
@@ -33,6 +24,3 @@ time.series <- function(data) {
     theme_bw()
   print(plot)
 }
-
-time.series(cat.subset)
-
