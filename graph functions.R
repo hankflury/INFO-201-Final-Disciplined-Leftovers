@@ -1,0 +1,38 @@
+library(ggplot2)
+library(leaflet)
+library(dplyr)
+mag.plot <- function(data) {
+  plot <- ggplot(data) +
+    geom_point(aes(x = lon, y =lat, size = mag), shape = 1, col = "purple") +
+    labs(x = "Longitude", y = "Latitude", size = "Magnitude") +
+    ggtitle(paste0("Magnitude of Earthquakes (n=", nrow(data), ")")) +
+    theme_bw()
+  plot
+}
+
+mag.plot(cat)
+cat$date <- as.Date(cat$date)
+
+cat.subset <- cat[cat$lon < -124 & cat$lat < 43, ]
+mag.plot(cat.subset)
+
+
+mag.plot.leaf <- function(data) {
+  leaflet() %>% 
+    addTiles() %>% 
+    addCircleMarkers(lng = data$lon, lat = data$lat, radius = (data$mag - 2.5) * 10, color = "purple", fill = "white")
+}
+mag.plot.leaf(cat)
+mag.plot.leaf(cat.subset)
+
+time.series <- function(data) {
+  plot <- ggplot(data) +
+    geom_density(aes(x = date), lwd = 3, fill = "yellow", col = "purple") +
+    ggtitle(paste0("Earthquake Time Series (n=", nrow(data), ")")) +
+    labs(x = "Date", y = "Density") +
+    theme_bw()
+  print(plot)
+}
+
+time.series(cat.subset)
+

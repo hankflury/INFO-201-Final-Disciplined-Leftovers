@@ -14,5 +14,4 @@ depthMagnitude <- function(earthquakes) {
                              "Shaded area represents a 99% Conidence Interval")
   print(depthMagCorrelate)
 }
-
 depthMagnitude(quakeData)
