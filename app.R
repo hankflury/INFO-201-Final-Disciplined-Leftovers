@@ -105,27 +105,27 @@ server <- function(input, output) {
    
    output$dep.mag <- renderPlot({
      data <- cat
-     data <- data[data$lat > input$lat[1] & data$lat < input$lat[2], ]
-     data <- data[data$lon > input$lon[1] & data$lon < input$lon[2], ]
-     data <- data[data$date > input$date[1] & data$date < input$date[2], ]
+     data <- data[data$lat >= input$lat[1] & data$lat <= input$lat[2], ]
+     data <- data[data$lon >= input$lon[1] & data$lon <= input$lon[2], ]
+     data <- data[data$date >= input$date[1] & data$date <= input$date[2], ]
      depthMagnitude(data)
    })
    
    output$time.series <- renderPlot({
      data <- cat
-     data <- data[data$lat > input$lat2[1] & data$lat < input$lat2[2], ]
-     data <- data[data$lon > input$lon2[1] & data$lon < input$lon2[2], ]
-     data <- data[data$date > input$date2[1] & data$date < input$date2[2], ]
-     data <- data[data$mag > input$mag[1] & data$mag < input$mag[2], ]
+     data <- data[data$lat >= input$lat2[1] & data$lat <= input$lat2[2], ]
+     data <- data[data$lon >= input$lon2[1] & data$lon <= input$lon2[2], ]
+     data <- data[data$date >= input$date2[1] & data$date <= input$date2[2], ]
+     data <- data[data$mag >= input$mag[1] & data$mag <= input$mag[2], ]
      time.series(data)
    })
    
    output$mag.plot <- renderPlot({
      data <- cat
-     data <- data[data$lat > input$lat3[1] & data$lat < input$lat3[2], ]
-     data <- data[data$lon > input$lon3[1] & data$lon < input$lon3[2], ]
-     data <- data[data$date > input$date3[1] & data$date < input$date3[2], ]
-     data <- data[data$mag > input$mag2[1] & data$mag < input$mag2[2], ]
+     data <- data[data$lat >= input$lat3[1] & data$lat <= input$lat3[2], ]
+     data <- data[data$lon >= input$lon3[1] & data$lon <= input$lon3[2], ]
+     data <- data[data$date >= input$date3[1] & data$date <= input$date3[2], ]
+     data <- data[data$mag >= input$mag2[1] & data$mag <= input$mag2[2], ]
      mag.plot(data)
    })
    
