@@ -1,6 +1,5 @@
 library(dplyr)
 library(ggplot2)
-quakeData <- read.csv("pnw-cat-recent-processed.csv", stringsAsFactors = FALSE)
 
 depthMagnitude <- function(earthquakes) {
   trimmedQuakes <-  earthquakes %>% select(lat:mag)
@@ -14,5 +13,3 @@ depthMagnitude <- function(earthquakes) {
                              "Shaded area represents a 99% Conidence Interval")
   print(depthMagCorrelate)
 }
-
-depthMagnitude(quakeData)
