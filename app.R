@@ -25,6 +25,7 @@ introChunk <- function() {
       recording equipment was utilized to collect the earthquake information."))
   )
 }
+
 depthChunk <- function() {
   mainPanel(
     strong(h1("Tremors: A Reckoning with Data")),
@@ -138,16 +139,21 @@ ui <- navbarPage(theme = shinytheme("united"),
                    timeChunk()
                  )),
 
-                 tabPanel("Contributors", fluidPage(
+                 tabPanel("Speaking to our faults", fluidPage(
                    
                    # Application title
-                   titlePanel("Contributors"),
+                   titlePanel("Closing thoughts and Credits"),
                    mainPanel(
+                     h1("Things to remember..."),
+                     h2("Correlation does not equal causation! While we make claims about earthquake activity in the PNW, we are\n
+                        severely limited in some areas but lack relevant data to make definitive claims!"),
+                     h2("While it may seem that the frequency of earthquakes have increased over the past 40 odd some years,\n
+                        it's important to realize that more accurate and distributed recording equipment has been utilized!"),
                      img("Pratibha Kharel, Computer Science", src = 'pratibha.png', width = 150, height = 200),
                      verbatimTextOutput(""),
                      img("Hank Flury, Statistics", src='hank.png', width = 150, height = 200),
                      verbatimTextOutput(""),
-                     img("Abdul Mohomed, Informatics", src='abdul.png', width = 150, height = 200),
+                     img("Abdul Mohamed, Political Science and Informatics", src='abdul.png', width = 150, height = 200),
                      verbatimTextOutput(""),
                      img("Shri Sharma, Informatics ", src='shri.png', width = 150, height = 200),
                      verbatimTextOutput("")
