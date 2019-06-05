@@ -50,6 +50,34 @@ timeChunk <- function() {
 
 ui <- navbarPage(theme = shinytheme("superhero"),
                  "Earthquake Visualizations",
+                 
+                 tabPanel("Earthquakes in Time and Space", fluidPage(
+                   
+                   # Application title
+                   titlePanel("Earthquakes in Time and Space"),
+                   
+                   # Sidebar range for lat, lon, and date
+                   sidebarLayout(
+                     sidebarPanel(
+                       sliderInput("lat3", label = h3("Latitude Range"), min = 42, 
+                                   max = 49, value = c(42, 49)),
+                       sliderInput("lon3", label = h3("Longitude Range"), min = -125, 
+                                   max = -116.5, value = c(-125, -116.5)),
+                       dateRangeInput("date3", label = h3("Date Range"), min = "1970-01-01",
+                                      max = "2012-01-01", start = "1970-01-01", end = "2012-01-01"),
+                       sliderInput("mag2", label = h3("Magnitude Range"), min = 2.5,
+                                   max = 10, value = c(2.5, 10))
+                     ),
+                     
+                     # Show a plot of the generated distribution
+                     mainPanel(
+                       plotOutput("mag.plot", click = "plot_click"),
+                       verbatimTextOutput("info"),
+                       leafletOutput("mag.plot.leaf")
+                     )
+                   )
+                 )),
+                 
                  tabPanel("Depth vs. Magnitude", fluidPage(
                    
                    # Application title
@@ -98,32 +126,7 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                    ),
                    timeChunk()
                  )),
-                 tabPanel("Earthquakes in Time and Space", fluidPage(
-                   
-                   # Application title
-                   titlePanel("Earthquakes in Time and Space"),
-                   
-                   # Sidebar range for lat, lon, and date
-                   sidebarLayout(
-                     sidebarPanel(
-                       sliderInput("lat3", label = h3("Latitude Range"), min = 42, 
-                                   max = 49, value = c(42, 49)),
-                       sliderInput("lon3", label = h3("Longitude Range"), min = -125, 
-                                   max = -116.5, value = c(-125, -116.5)),
-                       dateRangeInput("date3", label = h3("Date Range"), min = "1970-01-01",
-                                      max = "2012-01-01", start = "1970-01-01", end = "2012-01-01"),
-                       sliderInput("mag2", label = h3("Magnitude Range"), min = 2.5,
-                                   max = 10, value = c(2.5, 10))
-                     ),
-                     
-                     # Show a plot of the generated distribution
-                     mainPanel(
-                       plotOutput("mag.plot", click = "plot_click"),
-                       verbatimTextOutput("info"),
-                       leafletOutput("mag.plot.leaf")
-                     )
-                   )
-                 )),
+
                  tabPanel("Contributors", fluidPage(
                    
                    # Application title
@@ -180,7 +183,6 @@ server <- function(input, output) {
    })
    output$info <- renderText({
      xy_str <- function(e) { 
-       print(e$size)
        if(is.null(e)) return("Click on a point above\n")
        paste0("The longitude and latitude is (", round(e$x, 0),",", round(e$y, 0), ")")
      }
