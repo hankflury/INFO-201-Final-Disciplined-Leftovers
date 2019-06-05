@@ -18,7 +18,7 @@ mag.plot.leaf <- function(data) {
 
 time.series <- function(data) {
   plot <- ggplot(data) +
-    geom_density(aes(x = date), lwd = 3, fill = "yellow", col = "purple") +
+    geom_density(aes(x = date), fill = "blue", alpha = .5) +
     ggtitle(paste0("Earthquake Time Series (n=", nrow(data), ")")) +
     labs(x = "Date", y = "Density") +
     theme_bw()
