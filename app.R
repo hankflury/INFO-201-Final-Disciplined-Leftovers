@@ -84,7 +84,8 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                      
                      # Show a plot of the generated distribution
                      mainPanel(
-                       plotOutput("mag.plot"),
+                       plotOutput("mag.plot", click = "plot_click"),
+                       verbatimTextOutput("info"),
                        leafletOutput("mag.plot.leaf")
                      )
                    )
@@ -127,6 +128,15 @@ server <- function(input, output) {
      data <- data[data$date >= input$date3[1] & data$date <= input$date3[2], ]
      data <- data[data$mag >= input$mag2[1] & data$mag <= input$mag2[2], ]
      mag.plot(data)
+   })
+   output$info <- renderText({
+     xy_str <- function(e) { 
+       print(e$size)
+       if(is.null(e)) return("Click on a point above\n")
+       paste0("The longitude and latitude is (", round(e$x, 0),",", round(e$y, 0), ")")
+     }
+     paste0(xy_str(input$plot_click))
+     
    })
    
    output$mag.plot.leaf <- renderLeaflet({
