@@ -11,6 +11,6 @@ depthMagnitude <- function(earthquakes) {
                         labs(x = "Depth (Metres)", y = "Magnitude (Richter)",
                              title = paste0("Depth vs. Magnitude", " (n = ", nrow(trimmedQuakes),")"), 
                              subtitle = 
-                             "Shaded area represents a 99% Conidence Interval")
+                             "Shaded area represents a 99% Conidence Bound")
   print(depthMagCorrelate)
 }

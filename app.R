@@ -17,8 +17,9 @@ cat$date <- as.Date(cat$date)
 introChunk <- function() {
   mainPanel(
     h2("'What I am looking at here?' Quakes for days.."),
+    h2("Take a look at seismic events happening around you!"),
     h3(p("The dataset we're working with is a compilation of recorded earthquake statistics from the\n",
-      a("Pacific Northwest Seismic Network (PSSN)", href = "https://pnsn.org"), ". This dataset ranges from 1969 to 2018, with information\n
+      a("Pacific Northwest Seismic Network (PNSN)", href = "https://pnsn.org"), ". This dataset ranges from 1969 to 2018, with information\n
       collected from over 1000 recording stations. While the data begins in 1969, the equipment used to\n
       collect the information was somewhat archaic until 1970. That system  was based upn individuals calling\n
       in to report earthquakes and then state on a scale of 1-10 how severe it was. From 1970 onwards, actual\n
@@ -33,12 +34,13 @@ depthChunk <- function() {
       smoothed and fitted line. Each red dot represnets a single earthquake event\n
       across varying depths and magnitudes. With this graph, a larger depth indicates\n
       earthquakes that were detected deeper into the Earth. The shaded area represents,\n
-      to a 99% confidence interval, an extremely strong likelihood that earthquakes with any\n
+      to a 99% confidence bound, an extremely strong likelihood that earthquakes with any\n
       specific depth will have a magnitude within that shaded area.The curve basically predicts\n
-      the magnitude (y) given the depth (x), along with a 'margin of errror'. As you can see, the spread\n
+      the magnitude (y) given the depth (x), along with a 'margin of error'. As you can see, the spread\n
       of the confidence interval is based off of similar data occurences; the accuracy increases\n
       the more repetition there is! This graph clealry displays that, the farther down into the Earth\n
-      the quake is detected, the less predictable it is to ascertain the magnitude of the tremor!")
+      the quake is detected, the less predictable it is to ascertain the magnitude of the tremor!\n
+      Of course, we do have to recognize that our conclusions are constrained by the data we currently have!")
     )
   )
 }
@@ -53,9 +55,9 @@ timeChunk <- function() {
          if you took the integral of the entire graph you would get a total of 1! Now that was maybe too much\n
          calculus for your liking, just understand that the increase in density does represent an increase\n
          in the frequency of earthquakes!")),
-    strong(em("Fun Fact: The two large spikes in 1980 and 2004 respectively are when Mt. St. Helens erupted!\n 
+    strong("Fun Fact: The two large spikes in 1980 and 2004 respectively are when Mt. St. Helens erupted!\n 
         While the 1980 eruption most definitely changed the shape of the mountain itself, by 2004 there were\n
-        more 'detected' earthquakes due to the additional sensors installed since 1980!"))
+        more 'detected' earthquakes due to the additional sensors installed since 1980!")
   )
 }
 
@@ -73,9 +75,9 @@ ui <- navbarPage(theme = shinytheme("united"),
                                then just maybe we can determine the why!")),
                             h2("This application is designed to be an informative and interactive exploration into earthquake activity\n
                                within the Pacific Northwest! Today we aim to present:"),
-                            h1(strong("-A visualization of earthquake acivity across time and space from 1970 to 2012")),
-                            h1(strong("-An analysis of the possible correlation between depth of a seismic event and magnitude")),
-                            h1(strong("-A visualiztion of earthquake frequency during the same time period of 1970 to 2012"))
+                            h1(strong("1. A visualization of earthquake acivity across time and space from 1970 to 2012")),
+                            h1(strong("2. An analysis of the possible correlation between depth of a seismic event and magnitude")),
+                            h1(strong("3. A visualiztion of earthquake frequency during the same time period of 1970 to 2012"))
                           ),
                           sidebarPanel(
                             img("Earthquake jokes :)", src='quakePun.jpg', width = 400, height = 400)
@@ -91,13 +93,13 @@ ui <- navbarPage(theme = shinytheme("united"),
                    sidebarLayout(
                      sidebarPanel(
                        sliderInput("lat3", label = h3("Latitude Range"), min = 42, 
-                                   max = 49, value = c(42, 49)),
+                                   max = 49, value = c(42, 49), step =.01),
                        sliderInput("lon3", label = h3("Longitude Range"), min = -125, 
-                                   max = -116.5, value = c(-125, -116.5)),
+                                   max = -116.5, value = c(-125, -116.5), step = .01),
                        dateRangeInput("date3", label = h3("Date Range"), min = "1970-01-01",
                                       max = "2012-01-01", start = "1970-01-01", end = "2012-01-01"),
                        sliderInput("mag2", label = h3("Magnitude Range"), min = 2.5,
-                                   max = 10, value = c(2.5, 10))
+                                   max = 10, value = c(2.5, 10), step = .1)
                      ),
                      
                      # Show a plot of the generated distribution
@@ -119,9 +121,9 @@ ui <- navbarPage(theme = shinytheme("united"),
                    sidebarLayout(
                      sidebarPanel(
                        sliderInput("lat", label = h3("Latitude Range"), min = 42, 
-                                   max = 49, value = c(42, 49)),
+                                   max = 49, value = c(42, 49), step = .01),
                        sliderInput("lon", label = h3("Longitude Range"), min = -125, 
-                                   max = -116.5, value = c(-125, -116.5)),
+                                   max = -116.5, value = c(-125, -116.5), step = .01),
                        dateRangeInput("date", label = h3("Date Range"), min = "1970-01-01",
                                       max = "2012-01-01", start = "1970-01-01", end = "2012-01-01")
                        ),
@@ -142,13 +144,13 @@ ui <- navbarPage(theme = shinytheme("united"),
                    sidebarLayout(
                      sidebarPanel(
                        sliderInput("lat2", label = h3("Latitude Range"), min = 42, 
-                                   max = 49, value = c(42, 49)),
+                                   max = 49, value = c(42, 49), step = .01),
                        sliderInput("lon2", label = h3("Longitude Range"), min = -125, 
-                                   max = -116.5, value = c(-125, -116.5)),
+                                   max = -116.5, value = c(-125, -116.5), step = .01),
                        dateRangeInput("date2", label = h3("Date Range"), min = "1970-01-01",
                                    max = "2012-01-01", start = "1970-01-01", end = "2012-01-01"),
                        sliderInput("mag", label = h3("Magnitude Range"), min = 2.5,
-                                   max = 10, value = c(2.5, 10))
+                                   max = 10, value = c(2.5, 10), step = .1)
                      ),
                      
                      # Show a plot of the generated distribution
@@ -165,11 +167,11 @@ ui <- navbarPage(theme = shinytheme("united"),
                    titlePanel("Closing thoughts and Credits"),
                    mainPanel(
                      h1("Things to remember..."),
-                     h2("1.Correlation does not equal causation! While we make claims about earthquake activity in the PNW, we are\n
-                        severely limited in some areas but lack relevant data to make definitive claims!"),
-                     h2("2.While it may seem that the frequency of earthquakes have increased over the past 40 odd some years,\n
+                     h2("1. Correlation does not equal causation! While we make claims about earthquake activity in the PNW, we are\n
+                        severely limited in some areas and lack relevant data to make definitive claims!"),
+                     h2("2. While it may seem that the frequency of earthquakes have increased over the past 40 odd some years,\n
                         it's important to realize that more accurate and distributed recording equipment has been utilized!"),
-                     h2("3.Realize that we live nearby a (somtimes active) volcano! The frequency graph is a clear presentation\n
+                     h2("3. Realize that we live nearby a (somtimes active) volcano! The frequency graph is a clear presentation\n
                         of the effect Mt. St. Helens can have on surrounding seismic activity!"),
                      h1("Contributors:"),
                      img("Pratibha Kharel, Computer Science", src = 'pratibha.png', width = 150, height = 200),
