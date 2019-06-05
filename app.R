@@ -15,13 +15,45 @@ cat <- read.csv("pnw-cat-recent-processed.csv")
 cat$date <- as.Date(cat$date)
 
 # Define UI for application that draws a histogram
+depthChunk <- function() {
+  mainPanel(
+    strong(h1("Tremors: A Reckoning with Data")),
+    h3(p("What we're looking at here is a distribution of earthquake data over a\n
+      smoothed and fitted line. Each red dot represnets a single earthquake event\n
+      across varying depths and magnitudes. With this graph, a larger depth indicates\n
+      earthquakes that were detected deeper into the Earth. The shaded area represents,\n
+      to a 99% confidence interval, an extremely strong likelihood that earthquakes with any\n
+      specific depth will have a magnitude within that shaded area.The curve basically predicts\n
+      the magnitude (y) given the depth (x), along with a 'margin of errror'. As you can see, the spread\n
+      of the confidence interval is based off of similar data occurences; the accuracy increases\n
+      the more repetition there is! This graph clealry displays that, the farther down into the Earth\n
+      the quake is detected, the less predictable it is to ascertain the magnitude of the tremor!")
+    )
+  )
+}
+
+timeChunk <- function() {
+  mainPanel(
+    h1("Whose fault is it anyways?"),
+    h3(p("Here we are seeing a fairly straightforward representation of earthquake frequency\n
+         over time in the Pacific Northwest! This graph displays weighted averages for the frequency\n
+         of earthquakes over time: the density on the left (y) literally repersents a proportion of\n 
+         all the earthquakes that occurred. Since this is a 'filled' graph that represents density proportions,\n
+         if you took the integral of the entire graph you would get a total of 1! Now that was maybe too much\n
+         calculus for your liking, just understand that the increase in density does represent an increase\n
+         in the frequency of earthquakes!")),
+    strong(em("Fun Fact: The two large spikes in 1980 and 2004 respectively are when Mt. St. Helens erupted!\n 
+        While the 1980 eruption most definitely changed the shape of the mountain itself, by 2004 there were\n
+        more 'detected' earthquakes due to the additional sensors installed since 1980!"))
+  )
+}
 
 ui <- navbarPage(theme = shinytheme("superhero"),
                  "Earthquake Visualizations",
                  tabPanel("Depth vs. Magnitude", fluidPage(
                    
                    # Application title
-                   titlePanel("Depth vs. Magnitude"),
+                   titlePanel(strong("Depth vs. Magnitude")),
                    
                    # Sidebar range for lat, lon, and date
                    sidebarLayout(
@@ -38,7 +70,8 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                      mainPanel(
                        plotOutput("dep.mag")
                      )
-                   )
+                   ),
+                   depthChunk()
                  )),
                  tabPanel("Earthquakes Over Time", fluidPage(
                    
@@ -62,7 +95,8 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                      mainPanel(
                        plotOutput("time.series")
                      )
-                   )
+                   ),
+                   timeChunk()
                  )),
                  tabPanel("Earthquakes in Time and Space", fluidPage(
                    
@@ -138,6 +172,8 @@ server <- function(input, output) {
      mag.plot.leaf(data)
    })
 }
+
+
 
 # Run the application 
 shinyApp(ui = ui, server = server)

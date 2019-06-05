@@ -4,7 +4,7 @@ library(ggplot2)
 depthMagnitude <- function(earthquakes) {
   trimmedQuakes <-  earthquakes %>% select(lat:mag)
   depthMagCorrelate <- trimmedQuakes %>% ggplot() +
-                        geom_point(aes(depth, mag), position = "jitter", color = "yellow", size = 1) +
+                        geom_point(aes(depth, mag), position = "jitter", color = "red", size = 1) +
                         scale_color_continuous() +
                         geom_smooth(aes(depth, mag), size = 1.5, color = "purple", level = .99) +
                         theme_minimal() +
