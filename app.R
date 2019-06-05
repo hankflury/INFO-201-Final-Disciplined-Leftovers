@@ -15,13 +15,44 @@ cat <- read.csv("pnw-cat-recent-processed.csv")
 cat$date <- as.Date(cat$date)
 
 # Define UI for application that draws a histogram
+depthChunk <- function() {
+  mainPanel(
+    strong(h1("Tremors: A Reckoning with Data")),
+    h3(p("What we're looking at here is a distribution of earthquake data over a\n
+      smoothed and fitted line. Each red dot represnets a single earthquake event\n
+      across varying depths and magnitudes. With this graph, a larger depth indicates\n
+      earthquakes that were detected deeper into the Earth. The shaded area represents,\n
+      to a 99% confidence interval, an extremely strong likelihood that earthquakes with any\n
+      specific depth will have a magnitude within that shaded area. As you can see, the spread\n
+      of the confidence interval is based off of similar data occurences; the accuracy increases\n
+      the more repetition there is! This graph clealry displays that, the farther down into the Earth\n
+      the quake is detected, the less predictable it is to ascertain the magnitude of the tremor!")
+    )
+  )
+}
+
+timeChunk <- function() {
+  mainPanel(
+    strong(h1("Whose fault is it anyways?")),
+    h3(p("What we're looking at here is a distribution of earthquake data over a\n
+      smoothed and fitted line. Each red dot represnets a single earthquake event\n
+      across varying depths and magnitudes. With this graph, a larger depth indicates\n
+      earthquakes that were detected deeper into the Earth. The shaded area represents,\n
+      to a 99% confidence interval, an extremely strong likelihood that earthquakes with any\n
+      specific depth will have a magnitude within that shaded area. As you can see, the spread\n
+      of the confidence interval is based off of similar data occurences; the accuracy increases\n
+      the more repetition there is! This graph clealry displays that, the farther down into the Earth\n
+      the quake is detected, the less predictable it is to ascertain the magnitude of the tremor!")
+    )
+  )
+}
 
 ui <- navbarPage(theme = shinytheme("superhero"),
                  "Earthquake Visualizations",
                  tabPanel("Depth vs. Magnitude", fluidPage(
                    
                    # Application title
-                   titlePanel("Depth vs. Magnitude"),
+                   titlePanel(strong("Depth vs. Magnitude")),
                    
                    # Sidebar range for lat, lon, and date
                    sidebarLayout(
@@ -38,7 +69,8 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                      mainPanel(
                        plotOutput("dep.mag")
                      )
-                   )
+                   ),
+                   depthChunk()
                  )),
                  tabPanel("Earthquakes Over Time", fluidPage(
                    
@@ -62,7 +94,8 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                      mainPanel(
                        plotOutput("time.series")
                      )
-                   )
+                   ),
+                   timeChunk()
                  )),
                  tabPanel("Earthquakes in Time and Space", fluidPage(
                    
@@ -138,6 +171,8 @@ server <- function(input, output) {
      mag.plot.leaf(data)
    })
 }
+
+
 
 # Run the application 
 shinyApp(ui = ui, server = server)
