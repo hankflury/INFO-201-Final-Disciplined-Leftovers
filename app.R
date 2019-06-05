@@ -88,6 +88,21 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                        leafletOutput("mag.plot.leaf")
                      )
                    )
+                 )),
+                 tabPanel("Contributors", fluidPage(
+                   
+                   # Application title
+                   titlePanel("Contributors"),
+                   mainPanel(
+                     img("Pratibha Kharel, Computer Science", src = 'pratibha.png', width = 150, height = 200),
+                     verbatimTextOutput(""),
+                     img("Hank Flury, Statistics", src='hank.png', width = 150, height = 200),
+                     verbatimTextOutput(""),
+                     img("Abdul Mohomed, Informatics", src='abdul.png', width = 150, height = 200),
+                     verbatimTextOutput(""),
+                     img("Shri Sharma, Informatics ", src='shri.png', width = 150, height = 200),
+                     verbatimTextOutput("")
+                   )
                  ))
 )
 
@@ -137,6 +152,7 @@ server <- function(input, output) {
      data <- data[data$mag > input$mag2[1] & data$mag < input$mag2[2], ]
      mag.plot.leaf(data)
    })
+   
 }
 
 # Run the application 
