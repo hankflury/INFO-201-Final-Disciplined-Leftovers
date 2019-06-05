@@ -14,7 +14,17 @@ source("depthMagnitude.R")
 cat <- read.csv("pnw-cat-recent-processed.csv")
 cat$date <- as.Date(cat$date)
 
-# Define UI for application that draws a histogram
+introChunk <- function() {
+  mainPanel(
+    h2("'What I am looking at here?' Quakes for days.."),
+    h3(p("The dataset we're working with is a compilation of recorded earthquake statistics from the\n
+      Pacific Northwest Seismic Network (PSSN). This dataset ranges from 1969 to 2018, with information\n
+      collected from over 1000 recording stations. While the data begins in 1969, the equipment used to\n
+      collect the information was somewhat archaic until 1970. That system  was based upn individuals calling\n
+      in to report earthquakes and then state on a scale of 1-10 how severe it was. From 1970 onwards, actual\n
+      recording equipment was utilized to collect the earthquake information."))
+  )
+}
 depthChunk <- function() {
   mainPanel(
     strong(h1("Tremors: A Reckoning with Data")),
@@ -48,13 +58,13 @@ timeChunk <- function() {
   )
 }
 
-ui <- navbarPage(theme = shinytheme("superhero"),
-                 "Earthquake Visualizations",
+# Define UI for application that draws a histogram
+ui <- navbarPage(theme = shinytheme("united"),
+                 "'The Most Dangerous Quake'",
                  
-                 tabPanel("Earthquakes in Time and Space", fluidPage(
+                 tabPanel(h2("Earthquakes in Time and Space"), fluidPage(
                    
-                   # Application title
-                   titlePanel("Earthquakes in Time and Space"),
+                   h1("There's always a bigger quake..."),
                    
                    # Sidebar range for lat, lon, and date
                    sidebarLayout(
@@ -70,18 +80,19 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                      ),
                      
                      # Show a plot of the generated distribution
-                     mainPanel(
+                    mainPanel(
                        plotOutput("mag.plot", click = "plot_click"),
                        verbatimTextOutput("info"),
                        leafletOutput("mag.plot.leaf")
-                     )
-                   )
+                    )
+                   ),
+                   introChunk()
                  )),
                  
                  tabPanel("Depth vs. Magnitude", fluidPage(
                    
                    # Application title
-                   titlePanel(strong("Depth vs. Magnitude")),
+                   titlePanel(h1(strong("I'm quaking!"))),
                    
                    # Sidebar range for lat, lon, and date
                    sidebarLayout(
@@ -104,7 +115,7 @@ ui <- navbarPage(theme = shinytheme("superhero"),
                  tabPanel("Earthquakes Over Time", fluidPage(
                    
                    # Application title
-                   titlePanel("Earthquakes Over Time"),
+                   titlePanel(h1(strong("It's not my fault!"))),
                    
                    # Sidebar range for lat, lon, and date
                    sidebarLayout(
