@@ -63,7 +63,27 @@ timeChunk <- function() {
 ui <- navbarPage(theme = shinytheme("united"),
                  "'The Most Dangerous Quake'",
                  
-                 tabPanel(h2("Earthquakes in Time and Space"), fluidPage(
+                 tabPanel(h2("Back to Bedrock: What's that noise?"), fluidPage(
+                          titlePanel("Why care about earthquake analysis?"),
+                          mainPanel(
+                            h1(p("Seismic activity is a constant and ongoing event that many can tend to overlook given all\n
+                              that's happening in the world. The fact of the matter is, understanding the potential patterns\n
+                              behind seisimc activity can enable us to better handle (possibly) catastrophic events!"),
+                            h2("IF we can understanding the when and where, and to what extent in relation to other seismic events,\n
+                               then just maybe we can determine the why!")),
+                            h2("This application is designed to be an informative and interactive exploration into earthquake activity\n
+                               within the Pacific Northwest! Today we aim to present:"),
+                            h1(strong("-A visualization of earthquake acivity across time and space from 1970 to 2012")),
+                            h1(strong("-An analysis of the possible correlation between depth of a seismic event and magnitude")),
+                            h1(strong("-A visualiztion of earthquake frequency during the same time period of 1970 to 2012"))
+                          ),
+                          sidebarPanel(
+                            img("Earthquake jokes :)", src='quakePun.jpg', width = 400, height = 400)
+                          )
+                 
+                 )),
+                 
+                 tabPanel("Earthquakes in Time and Space", fluidPage(
                    
                    h1("There's always a bigger quake..."),
                    
@@ -100,7 +120,7 @@ ui <- navbarPage(theme = shinytheme("united"),
                      sidebarPanel(
                        sliderInput("lat", label = h3("Latitude Range"), min = 42, 
                                    max = 49, value = c(42, 49)),
-                       sliderInput("lon", label = h3("Slider Range"), min = -125, 
+                       sliderInput("lon", label = h3("Longitude Range"), min = -125, 
                                    max = -116.5, value = c(-125, -116.5)),
                        dateRangeInput("date", label = h3("Date Range"), min = "1970-01-01",
                                       max = "2012-01-01", start = "1970-01-01", end = "2012-01-01")
@@ -145,10 +165,13 @@ ui <- navbarPage(theme = shinytheme("united"),
                    titlePanel("Closing thoughts and Credits"),
                    mainPanel(
                      h1("Things to remember..."),
-                     h2("Correlation does not equal causation! While we make claims about earthquake activity in the PNW, we are\n
+                     h2("1.Correlation does not equal causation! While we make claims about earthquake activity in the PNW, we are\n
                         severely limited in some areas but lack relevant data to make definitive claims!"),
-                     h2("While it may seem that the frequency of earthquakes have increased over the past 40 odd some years,\n
+                     h2("2.While it may seem that the frequency of earthquakes have increased over the past 40 odd some years,\n
                         it's important to realize that more accurate and distributed recording equipment has been utilized!"),
+                     h2("3.Realize that we live nearby a (somtimes active) volcano! The frequency graph is a clear presentation\n
+                        of the effect Mt. St. Helens can have on surrounding seismic activity!"),
+                     h1("Contributors:"),
                      img("Pratibha Kharel, Computer Science", src = 'pratibha.png', width = 150, height = 200),
                      verbatimTextOutput(""),
                      img("Hank Flury, Statistics", src='hank.png', width = 150, height = 200),
@@ -157,6 +180,9 @@ ui <- navbarPage(theme = shinytheme("united"),
                      verbatimTextOutput(""),
                      img("Shri Sharma, Informatics ", src='shri.png', width = 150, height = 200),
                      verbatimTextOutput("")
+                   ),
+                   sidebarPanel(
+                     img("Earthquake jokes pt. 2 :)", src = 'quakeJoke2.png', width = 300, height = 300)
                    )
                  ))
 )

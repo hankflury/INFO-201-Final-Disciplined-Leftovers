@@ -9,7 +9,8 @@ depthMagnitude <- function(earthquakes) {
                         geom_smooth(aes(depth, mag), size = 1.5, color = "purple", level = .99) +
                         theme_minimal() +
                         labs(x = "Depth (Metres)", y = "Magnitude (Richter)",
-                             title = "Depth vs. Magnitude", subtitle = 
+                             title = paste0("Depth vs. Magnitude", " (n = ", nrow(trimmedQuakes),")"), 
+                             subtitle = 
                              "Shaded area represents a 99% Conidence Interval")
   print(depthMagCorrelate)
 }
