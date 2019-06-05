@@ -17,8 +17,8 @@ cat$date <- as.Date(cat$date)
 introChunk <- function() {
   mainPanel(
     h2("'What I am looking at here?' Quakes for days.."),
-    h3(p("The dataset we're working with is a compilation of recorded earthquake statistics from the\n
-      Pacific Northwest Seismic Network (PSSN). This dataset ranges from 1969 to 2018, with information\n
+    h3(p("The dataset we're working with is a compilation of recorded earthquake statistics from the\n",
+      a("Pacific Northwest Seismic Network (PSSN)", href = "https://pnsn.org"), ". This dataset ranges from 1969 to 2018, with information\n
       collected from over 1000 recording stations. While the data begins in 1969, the equipment used to\n
       collect the information was somewhat archaic until 1970. That system  was based upn individuals calling\n
       in to report earthquakes and then state on a scale of 1-10 how severe it was. From 1970 onwards, actual\n
