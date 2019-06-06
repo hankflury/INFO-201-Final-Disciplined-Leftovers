@@ -1,11 +1,4 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+
 
 library(shiny)
 library(shinythemes)
@@ -14,9 +7,10 @@ source("depthMagnitude.R")
 cat <- read.csv("pnw-cat-recent-processed.csv")
 cat$date <- as.Date(cat$date)
 
+#Intro chunk of text to pair with interactive earthquake leaflet
 introChunk <- function() {
   mainPanel(
-    h2("'What I am looking at here?' Quakes for days.."),
+    h2("'What am I looking at here?' Quakes for days.."),
     h2("Take a look at seismic events happening around you!"),
     h3(p("The dataset we're working with is a compilation of recorded earthquake statistics from the\n",
       a("Pacific Northwest Seismic Network (PNSN)", href = "https://pnsn.org"), ". This dataset ranges from 1969 to 2018, with information\n
@@ -27,6 +21,7 @@ introChunk <- function() {
   )
 }
 
+#Text chunk to pair with the depth vs magnitude analysis tab
 depthChunk <- function() {
   mainPanel(
     strong(h1("Tremors: A Reckoning with Data")),
@@ -45,6 +40,7 @@ depthChunk <- function() {
   )
 }
 
+#Text chunk to pair with the earthquake density graph over time panel
 timeChunk <- function() {
   mainPanel(
     h1("Whose fault is it anyways?"),
@@ -61,17 +57,17 @@ timeChunk <- function() {
   )
 }
 
-# Define UI for application that draws a histogram
+#Creates the UI for the earthquake viz app
 ui <- navbarPage(theme = shinytheme("united"),
                  "'The Most Dangerous Quake'",
                  
-                 tabPanel(h2("Back to Bedrock: What's that noise?"), fluidPage(
+                 tabPanel(h2("Back to Bedrock: What's that noise?"), fluidPage( #Introduction panel
                           titlePanel("Why care about earthquake analysis?"),
-                          mainPanel(
+                          mainPanel( #Introductoy text chunk for first tab
                             h1(p("Seismic activity is a constant and ongoing event that many can tend to overlook given all\n
                               that's happening in the world. The fact of the matter is, understanding the potential patterns\n
                               behind seisimc activity can enable us to better handle (possibly) catastrophic events!"),
-                            h2("IF we can understanding the when and where, and to what extent in relation to other seismic events,\n
+                            h2("IF we can understand the when and where, and to what extent in relation to other seismic events,\n
                                then just maybe we can determine the why!")),
                             h2("This application is designed to be an informative and interactive exploration into earthquake activity\n
                                within the Pacific Northwest! Today we aim to present:"),
@@ -79,13 +75,13 @@ ui <- navbarPage(theme = shinytheme("united"),
                             h1(strong("2. An analysis of the possible correlation between depth of a seismic event and magnitude")),
                             h1(strong("3. A visualiztion of earthquake frequency during the same time period of 1970 to 2012"))
                           ),
-                          sidebarPanel(
+                          sidebarPanel( #Sourcing in an earthquake pun for the sidebar
                             img("Earthquake jokes :)", src='quakePun.jpg', width = 400, height = 400)
                           )
                  
                  )),
                  
-                 tabPanel("Earthquakes in Time and Space", fluidPage(
+                 tabPanel("Earthquakes in Time and Space", fluidPage( #Time and space panel (interactive leaflet)
                    
                    h1("There's always a bigger quake..."),
                    
@@ -112,9 +108,8 @@ ui <- navbarPage(theme = shinytheme("united"),
                    introChunk()
                  )),
                  
-                 tabPanel("Depth vs. Magnitude", fluidPage(
-                   
-                   # Application title
+                 tabPanel("Depth vs. Magnitude", fluidPage( #Depth vs. Magnitude graph panel 
+                  
                    titlePanel(h1(strong("I'm quaking!"))),
                    
                    # Sidebar range for lat, lon, and date
@@ -128,16 +123,15 @@ ui <- navbarPage(theme = shinytheme("united"),
                                       max = "2012-01-01", start = "1970-01-01", end = "2012-01-01")
                        ),
                      
-                     # Show a plot of the generated distribution
+                     # Displays plot of depth vs.magnitude graph
                      mainPanel(
                        plotOutput("dep.mag")
                      )
                    ),
                    depthChunk()
                  )),
-                 tabPanel("Earthquakes Over Time", fluidPage(
+                 tabPanel("Earthquakes Over Time", fluidPage( #Earthquake frequency graph panel
                    
-                   # Application title
                    titlePanel(h1(strong("It's not my fault!"))),
                    
                    # Sidebar range for lat, lon, and date
@@ -153,7 +147,7 @@ ui <- navbarPage(theme = shinytheme("united"),
                                    max = 10, value = c(2.5, 10), step = .1)
                      ),
                      
-                     # Show a plot of the generated distribution
+                     # Displays density graph for earthquake frequency
                      mainPanel(
                        plotOutput("time.series")
                      )
@@ -161,11 +155,10 @@ ui <- navbarPage(theme = shinytheme("united"),
                    timeChunk()
                  )),
 
-                 tabPanel("Speaking to our faults", fluidPage(
+                 tabPanel("Speaking to our faults", fluidPage( #Concluding panel
                    
-                   # Application title
                    titlePanel("Closing thoughts and Credits"),
-                   mainPanel(
+                   mainPanel( #Concluding text chunk with closing hightlights/takeaways
                      h1("Things to remember..."),
                      h2("1. Correlation does not equal causation! While we make claims about earthquake activity in the PNW, we are\n
                         severely limited in some areas and lack relevant data to make definitive claims!"),
@@ -174,7 +167,7 @@ ui <- navbarPage(theme = shinytheme("united"),
                      h2("3. Realize that we live nearby a (somtimes active) volcano! The frequency graph is a clear presentation\n
                         of the effect Mt. St. Helens can have on surrounding seismic activity!"),
                      h1("Contributors:"),
-                     img("Pratibha Kharel, Computer Science", src = 'pratibha.png', width = 150, height = 200),
+                     img("Pratibha Kharel, Computer Science", src = 'pratibha.png', width = 150, height = 200), #Sourcing in author pictures
                      verbatimTextOutput(""),
                      img("Hank Flury, Statistics", src='hank.png', width = 150, height = 200),
                      verbatimTextOutput(""),
@@ -183,15 +176,16 @@ ui <- navbarPage(theme = shinytheme("united"),
                      img("Shri Sharma, Informatics ", src='shri.png', width = 150, height = 200),
                      verbatimTextOutput("")
                    ),
-                   sidebarPanel(
+                   sidebarPanel( #Adding yet another earthquake joke into the sidebar
                      img("Earthquake jokes pt. 2 :)", src = 'quakeJoke2.png', width = 300, height = 300)
                    )
                  ))
 )
 
-# Define server logic required to draw a histogram
+#Defining sever logic to implement interactivity for the graphs/visualizations
 server <- function(input, output) {
    
+  #Implement functionality for user to interact with the depth vs magnitude graph, allowing user to set parameters
    output$dep.mag <- renderPlot({
      data <- cat
      data <- data[data$lat >= input$lat[1] & data$lat <= input$lat[2], ]
@@ -200,6 +194,7 @@ server <- function(input, output) {
      depthMagnitude(data)
    })
    
+   #Implement functionality for user to interact with the time series density graph, allowing user to set parameters
    output$time.series <- renderPlot({
      data <- cat
      data <- data[data$lat >= input$lat2[1] & data$lat <= input$lat2[2], ]
@@ -209,6 +204,8 @@ server <- function(input, output) {
      time.series(data)
    })
    
+   #Implement functionality for user to interact with the mag plot graph 
+   #(plain lat/lon graph on empty coord grid), allowing user to set parameters
    output$mag.plot <- renderPlot({
      data <- cat
      data <- data[data$lat >= input$lat3[1] & data$lat <= input$lat3[2], ]
@@ -217,6 +214,8 @@ server <- function(input, output) {
      data <- data[data$mag >= input$mag2[1] & data$mag <= input$mag2[2], ]
      mag.plot(data)
    })
+   
+   #Implement functionality for the pointer function with the mag plot graph to display a point's lat/lon
    output$info <- renderText({
      xy_str <- function(e) { 
        if(is.null(e)) return("Click on a point above\n")
@@ -226,6 +225,7 @@ server <- function(input, output) {
      
    })
    
+   #Implement functionality for the mag plot leaflet graph, allowing user to zoom in and change values
    output$mag.plot.leaf <- renderLeaflet({
      data <- cat
      data <- data[data$lat > input$lat3[1] & data$lat < input$lat3[2], ]
@@ -239,6 +239,6 @@ server <- function(input, output) {
 
 
 
-# Run the application 
+# Run the app, make the magic happen
 shinyApp(ui = ui, server = server)
 

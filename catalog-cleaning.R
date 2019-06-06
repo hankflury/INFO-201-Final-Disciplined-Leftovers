@@ -1,6 +1,7 @@
 library(ggplot2)
 library(dplyr)
 
+#Read in the earthquake dataset
 new <- read.csv("pnsn_event_export_20190502.csv", header=T)
 
 # Remove the last 3 characters of the Time.Local for the new eqks - these are either PDT/PST
@@ -26,4 +27,5 @@ cat.new.sorted <- cat.new[order(cat.new$time, decreasing=F),]
 
 cat.net.sorted <- cat.new.sorted[cat.new.sorted$date >= "1970-01-01", ]
 
+#Export the cleaned earthquake dataset
 write.csv(cat.new.sorted, "pnw-cat-recent-processed.csv", row.names=F)
